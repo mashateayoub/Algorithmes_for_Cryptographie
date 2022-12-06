@@ -62,7 +62,7 @@ if __name__ == "__main__":
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-    IV = [0 for i in range(0, 360)]
+    IV = [0 for i in range(0, 360)]  # message initiale (un vecteur des 0 )
     imgcy1 = CBC(img, IV)
     cv2.imshow("image chifree avec CBC : ", np.uint8(imgcy1))
     cv2.waitKey(0)
