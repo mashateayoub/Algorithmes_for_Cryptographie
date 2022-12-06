@@ -49,7 +49,6 @@ def XOR(bloc1, bloc2):
 
 if __name__ == "__main__":
     image = cv2.imread("A.jpg", 0)
-    print(image.shape)
     ret, img = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
     cv2.imshow("image", img)
     cv2.waitKey(0)
