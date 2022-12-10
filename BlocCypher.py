@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
     imgcy = ECB(img)
     cv2.imshow(
-        "image chifree avec ECB (pas de grande changement) decalaga de tt la ligne par un seule pixel : ",
+        "image chifree avec ECB (pas de grande changementm: decalaga de tt la ligne par un seule pixel ) : ",
         imgcy,
     )
     cv2.waitKey(0)
