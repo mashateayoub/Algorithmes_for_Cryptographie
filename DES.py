@@ -124,14 +124,21 @@ def permuter(msg, M):
     return resultats
 
 
-def decaler(Bloc):  # decalage par 1 (pour k1) /  (par t pour kt)
+def decaler(Bloc, t):  # decalage par 1 (pour k1) /  (par t pour kt)
     res = []
     for i in range(0, len(Bloc)):
-        if i == 0:
-            res.append(Bloc[len(Bloc) - 1])
-        else:
-            res.append(Bloc[i - 1])
-
+        if t == 1:
+            if i == len(Bloc) - 1:
+                res.append(Bloc[0])
+            else:
+                res.append(Bloc[i + 1])
+        elif t == 2:
+            if i == len(Bloc) - 1:
+                res.append(Bloc[1])
+            elif i == len(Bloc) - 2:
+                res.append(Bloc[0])
+            else:
+                res.append(Bloc[i + 2])
     return res
 
 
@@ -144,12 +151,12 @@ def arrayToChar(array):
 
 
 def XOR(bloc1, bloc2):
-    res = []
+    res = ""
     for i in range(0, len(bloc1)):
         if bloc1[i] == bloc2[i]:
-            res.append(0)
+            res += "0"
         elif bloc1[i] != bloc2[i]:
-            res.append(1)
+            res += "1"
     return res
 
 
@@ -157,72 +164,39 @@ def S_B(message):
     res = []
     n = 6
     blocs = [message[i : i + 6] for i in range(0, len(message), n)]
-    for i in range(8):
+    for i in range(0, 8):
         S = s_boxes[i]
         bloc = blocs[i]
         c = (
-            (int(bloc[1]) * (2 ^ 3))
-            + (int(bloc[2]) * (2 ^ 2))
-            + (int(bloc[3]) * (2 ^ 1))
-            + (int(bloc[4]) * (2 ^ 0))
+            (int(bloc[1]) * (2**3))
+            + (int(bloc[2]) * (2**2))
+            + (int(bloc[3]) * (2**1))
+            + (int(bloc[4]) * (2**0))
         )
         l = (int(bloc[0]) * 2) + (int(bloc[5]))
-        print(bloc, l, c)
         res.append(bin(S[l][c]))
     return res
 
 
 def bin(n):
+
     res = ""
-    i = 1 << 4
-    while i > 0:
+    # array to store
+    # binary number
+    binaryNum = [0] * 4
 
-        if (n & i) != 0:
-            res += "1"
-        else:
-            res += "0"
+    # counter for binary array
+    i = 0
+    while n > 0:
 
-        i = i // 2
+        # storing remainder
+        # in binary array
+        binaryNum[i] = n % 2
+        n = int(n / 2)
+        i += 1
+
+    # printing binary array
+    # in reverse order
+    for j in range(4 - 1, -1, -1):
+        res += str(binaryNum[j])
     return res
-
-
-def DES(message, key):
-    return 0
-
-
-if __name__ == "__main__":
-
-    # Initialisation :
-    k = "1111000011110000111100000101010100110011010101011011101011100010"  # cle en binaire 64bits
-    message = "1001000001000111100000000101010100001100010101001000101000100010"  # message en binaire 64bits
-    # Calcules Initiales :
-    pc1 = arrayToChar(permuter(k, PC1))
-    c0 = pc1[:28]
-    d0 = pc1[28:]
-    ip = arrayToChar(permuter(message, IP))
-    L0 = ip[:32]
-    R0 = ip[32:]
-    ci = c0
-    di = d0
-    Li = L0
-    Ri = R0
-
-    # Boucle des 16 iterations :
-    for i in range(0, 16):
-        print("\n Iteration n", i + 1, ":")
-        ci = arrayToChar(decaler(ci))
-        di = arrayToChar(decaler(di))
-        ki = arrayToChar(permuter(ci + di, PC2))
-        print("\nKey : ", ki, len(ki))
-        Rk = XOR(
-            Li,
-            arrayToChar(
-                permuter(arrayToChar(S_B(XOR(arrayToChar(permuter(Ri, E)), ki))), P)
-            ),
-        )
-        Lk = Ri
-        Ri = Rk
-        Li = Lk
-    # resultats de chifrement DES :
-    y = arrayToChar(permuter(Li + Ri, IPI))
-    print("\n Le message chiffree apres les 16 iterations: ", y, len(y))
