@@ -13,8 +13,6 @@ for i in range(0, 16):
     ki = DES.arrayToChar(DES.permuter(ck + dk, DES.PC2))
     ci = ck
     di = dk
-    print("C" + str(i + 1) + " : ", ci)
-    print("D" + str(i + 1) + " : ", di)
     keys.append(ki)
 
 # PART 2 : Cyphering message
@@ -55,3 +53,4 @@ for i in range(0, 16):
 
 y = DES.arrayToChar(DES.permuter(R[15] + L[15], DES.IPI))
 print("\n Le message chiffree apres les 16 iterations: ", y, len(y))
+# le message a trouver: 1000010111101000000100110101010000001111000010101011010000000101
