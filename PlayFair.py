@@ -60,7 +60,7 @@ def decypher(ch, key):
 
 
 def KeyMatrix(key):
-    """Fonction de construction de la matrice """
+    """Fonction de construction de la matrice"""
     ls = []
     alphabet = list(reversed(list(string.ascii_lowercase)))
     for i in key:
@@ -81,7 +81,6 @@ def KeyMatrix(key):
         if t == 5:
             r += 1
             t = 0
-
     return M
 
 

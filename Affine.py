@@ -51,3 +51,6 @@ def IEE(a, b):
 
     return (r, u, v)
 
+
+if __name__ == "__main__":
+    print(IEE(500, 25))
